@@ -87,9 +87,9 @@ class OrderControllerTest {
     @Test
     public void testSetGoods() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                .post("/order/0/goods")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("[{\"name\":\"Мясо\"}]"))
+                        .post("/order/0/goods")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("[{\"name\":\"Мясо\"}]"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Мясо"));
     }
