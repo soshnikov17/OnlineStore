@@ -6,6 +6,7 @@ import com.example.OnlineStore.entity.Order;
 import com.example.OnlineStore.entity.User;
 import com.example.OnlineStore.repository.OrderRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class OrderControllerTest {
     @Autowired
     MockMvc mockMvc;
-
     @Autowired
     OrderRepository orderRepository;
 
@@ -49,14 +49,18 @@ class OrderControllerTest {
     @Test
     public void testSaveOrder() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .post("/order/1"))
+                        .post("/order"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Assertions.assertEquals(2, orderRepository.findAll().size());
     }
 
     @Test
     public void testDeleteOrder() throws Exception {
         this.mockMvc.perform(delete("/order/0"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Assertions.assertEquals(0, orderRepository.findAll().size());
     }
 
     @Test
@@ -64,7 +68,6 @@ class OrderControllerTest {
         this.mockMvc.perform(get("/order/0/user"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
-
     }
 
     @Test
@@ -72,7 +75,6 @@ class OrderControllerTest {
         this.mockMvc.perform(get("/order/0/company"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
-
     }
 
     @Test
@@ -85,10 +87,10 @@ class OrderControllerTest {
     @Test
     public void testSetGoods() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/order/0/goods")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("[{\"name\":\"Мясо\"}]"))
-                //.andExpect(MockMvcResultMatchers.status().isOk())
+                .post("/order/0/goods")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("[{\"name\":\"Мясо\"}]"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Мясо"));
     }
 

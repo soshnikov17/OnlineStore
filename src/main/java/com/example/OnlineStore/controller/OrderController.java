@@ -20,9 +20,9 @@ public class OrderController {
     private final OrderService orderService;
     private final CompanyService companyService;
 
-    @PostMapping("/{id}")
+    @PostMapping
     @ResponseBody
-    public OrderDto save(@PathVariable String id, @RequestBody(required = false) OrderDto orderDto) {
+    public OrderDto save(@RequestBody(required = false) OrderDto orderDto) {
         return orderService.save(orderDto);
     }
 
@@ -31,7 +31,6 @@ public class OrderController {
     public OrderDto remove(@PathVariable String id) {
         return orderService.remove(Integer.parseInt(id));
     }
-
 
     @GetMapping("{id}/user")
     public String getUserPage(@PathVariable String id) {
