@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Параметры заказа</title>
+</head>
+<body>
+<h2>Подтвердите параметры заказа</h2>
+<div id="recipientInfo">
+    <p th:text="'Имя: '+ ${name}"><strong></strong></p>
+    <p th:text="'Фамилия: '+ ${surname}"><strong></strong></p>
+    <p th:text="'Телефон: '+ ${phone}"><strong></strong></p>
+    <p th:text="'email: '+ ${email}"><strong></strong></p>
+    <p th:text="'Адрес доставки: '+ ${address}"><strong></strong></p>
+    <p th:text="'Выбранная компания: '+ ${company}"><strong></strong></p>
+    <p th:text="'Выбранный товар: '+ ${goods}"><strong></strong></p>
+</div>
+
+<button id="confirmButton" onclick="confirmButton()">Подтвердить</button>
+<button id="deflectButton" onclick="deflectButton()">Отклонить</button>
+
+<script>
+    function confirmButton() {
+        var newPageURL = "http://localhost:8080/success";
+        window.location.href = newPageURL;
+    }
+
+    function deflectButton() {
+        fetch('http://localhost:8080/order/0', {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                var newPageURL = "http://localhost:8080/start";
+                window.location.href = newPageURL;
+            } else {
+                console.error('Ошибка при отправке данных.');
+            }
+        });
+    }
+</script>
+</body>
+</html>

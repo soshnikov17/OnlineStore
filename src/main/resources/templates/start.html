@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Стартовая страница</title>
+</head>
+<body>
+<h1>Добро пожаловать в магазин!</h1>
+<button onclick="redirectToStore()">Выбрать товары</button>
+
+<script>
+        function redirectToStore() {
+
+            const userData = {};
+
+            // Отправка данных в формате JSON по HTTP-запросу
+            fetch('http://localhost:8080/order/0', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    var newPageURL = "http://localhost:8080/shop";
+                    window.location.href = newPageURL;
+                } else {
+                    console.error('Ошибка при отправке данных.');
+                }
+            });
+        }
+
+</script>
+</body>
+</html>

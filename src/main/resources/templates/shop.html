@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
+<head>
+    <title>Магазин товаров</title>
+</head>
+<body>
+<h1>Выберите товары</h1>
+
+<form id="productForm">
+    <label for="product1"><p th:text="${goods1}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product1" value="Хлеб"><br>
+
+    <label for="product2"><p th:text="${goods2}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product2" value="Сало"><br>
+
+    <label for="product3"><p th:text="${goods3}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product3" value="Чай"><br>
+
+    <label for="product4"><p th:text="${goods4}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product4" value="Телевизор"><br>
+
+    <label for="product4"><p th:text="${goods5}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product5" value="Ноутбук"><br>
+
+    <label for="product4"><p th:text="${goods6}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product6" value="Утюг"><br>
+
+    <label for="product4"><p th:text="${goods7}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product7" value="Чайник"><br>
+
+    <label for="product4"><p th:text="${goods8}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product8" value="Диван"><br>
+
+    <label for="product4"><p th:text="${goods9}"><strong></strong></p></label>
+    <input type="checkbox" name="products" id="product9" value="Стол"><br>
+
+    <button type="button" onclick="submitForm()">Подтвердить</button>
+</form>
+
+<script>
+        function submitForm() {
+            const selectedProducts = document.querySelectorAll('input[type="checkbox"]:checked');
+            const selectedValues = [];
+
+            selectedProducts.forEach(function (goods) {
+                selectedValues.push(goods.value);
+            });
+
+            const jsonData = JSON.stringify(selectedValues);
+
+            fetch('http://localhost:8080/order/0/goods', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: jsonData,
+            })
+            .then(response => {
+                if (response.ok) {
+                    var newPageURL = "http://localhost:8080/order/0/user";
+                    window.location.href = newPageURL;
+                } else {
+                    console.error('Ошибка при отправке данных.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Выбор транспортной компании</title>
+</head>
+<body>
+<h1>Выберите транспортную компанию:</h1>
+<form id="companyForm">
+    <input type="radio" name="company" value="DPD"><p th:text="${company0}"><strong></strong></p><br>
+    <input type="radio" name="company" value="Pochta"><p th:text="${company1}"><strong></strong></p><br>
+    <input type="radio" name="company" value="SDEK"><p th:text="${company2}"><strong></strong></p><br>
+    <input type="radio" name="company" value="Horizont"><p th:text="${company3}"><strong></strong></p><br>
+    <input type="radio" name="company" value="FedEx"><p th:text="${company4}"><strong></strong></p><br>
+    <br>
+    <button type="button" onclick="sendData()">Отправить</button>
+</form>
+
+<script>
+        function sendData() {
+            const selectedCompany = document.querySelector('input[name="company"]:checked');
+
+            const data = { name: selectedCompany.value };
+
+            fetch('http://localhost:8080/order/0/company', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Обработка ответа от сервера
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+
+            var newPageURL = "http://localhost:8080/order/0/check";
+            window.location.href = newPageURL;
+        }
+    </script>
+</body>
+</html>
+

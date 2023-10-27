@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ оформлен</title>
+</head>
+<body>
+<h1>Заказ успешно оформлен!</h1>
+<button id="returnButton" onclick="returnButton()">Вернуться на главную страницу</button>
+<script>
+        function returnButton() {
+            var newPageURL = "http://localhost:8080/start";
+            window.location.href = newPageURL;
+        }
+</script>
+</body>
+</html>

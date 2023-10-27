@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Данные получателя</title>
+</head>
+<body>
+<h1>Заполните данные о получателе</h1>
+<form id="recipientForm">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="name">Фамилия:</label>
+    <input type="text" id="surname" name="surname" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Телефон:</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="address">Адрес доставки:</label>
+    <textarea id="address" name="address" rows="4" required></textarea>
+
+    <input type="button" id="submitButton" value="Отправить">
+</form>
+
+<script>
+        document.getElementById('submitButton').addEventListener('click', function () {
+            var recipientData = {
+                name: document.getElementById('name').value,
+                surname: document.getElementById('surname').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value
+            };
+
+            var jsonData = JSON.stringify(recipientData);
+
+            fetch('http://localhost:8080/order/0/user', {
+                method: 'POST',
+                body: jsonData,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    var newPageURL = "http://localhost:8080/order/0/company";
+                    window.location.href = newPageURL;
+                } else {
+                    console.error('Ошибка при отправке данных.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
